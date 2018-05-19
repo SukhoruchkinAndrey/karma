@@ -1,5 +1,5 @@
 import React from 'react';
 
-const PersonInfo = () => <div>123</div>;
+const PersonInfo = ({ match }) => <div>{match.params.userId}</div>;
 
 export default PersonInfo;

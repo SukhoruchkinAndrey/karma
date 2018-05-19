@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './ListItem.css';
 
-const ListItem = ({ item, columns }) => (
-   <tr className="listItem">
+const ListItem = ({ item, columns, handleClick }) => (
+   <tr className="listItem" onClick={() => handleClick(item)}>
       {columns.map(column => <td key={column.field}>{item[column.field]}</td>)}
    </tr>
 );

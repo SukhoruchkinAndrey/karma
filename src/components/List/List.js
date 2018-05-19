@@ -7,7 +7,8 @@ const List = ({
    columns,
    handleColumnClick,
    currentSortedColumn,
-   currentSort
+   currentSort,
+   handleRowClick
 }) => (
    <table>
       <ListHeader
@@ -18,7 +19,12 @@ const List = ({
       />
       <tbody>
          {items.map(item => (
-            <ListItem key={item.id} item={item} columns={columns} />
+            <ListItem
+               key={item.id}
+               item={item}
+               columns={columns}
+               handleClick={handleRowClick}
+            />
          ))}
       </tbody>
    </table>

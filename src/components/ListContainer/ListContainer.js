@@ -42,7 +42,7 @@ class ListContainer extends Component {
 
    render() {
       const { items, currentSort, currentSortedColumn, isLoading } = this.state;
-      const { columns } = this.props;
+      const { columns, handleRowClick } = this.props;
 
       return (
          <div className="ListContainer">
@@ -53,6 +53,7 @@ class ListContainer extends Component {
                currentSort={currentSort}
                currentSortedColumn={currentSortedColumn}
                handleColumnClick={this.handleColumnClick}
+               handleRowClick={handleRowClick}
             />
          </div>
       );

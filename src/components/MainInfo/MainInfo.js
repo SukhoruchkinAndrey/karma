@@ -56,11 +56,19 @@ const columns = [
 ];
 
 class MainInfo extends Component {
+   handleRowClick = item => {
+      this.props.history.push(`/person/${item.id}`);
+   };
+
    render() {
       return (
          <div className="MainInfo">
             <div className="App-intro">
-               <ListContainer items={data} columns={columns} />
+               <ListContainer
+                  items={data}
+                  columns={columns}
+                  handleRowClick={this.handleRowClick}
+               />
             </div>
          </div>
       );

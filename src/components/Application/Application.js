@@ -10,7 +10,7 @@ const Application = () => (
       <Layout>
          <Switch>
             <Route path="/" component={MainInfo} exact />
-            <Route path="/person" component={PersonInfo} exact />
+            <Route path="/person/:userId" component={PersonInfo} exact />
             <Route component={FourZeroFour} />
          </Switch>
       </Layout>
