@@ -5,19 +5,23 @@ import ListHeader from '../ListHeader/ListHeader';
 const columns = [
    {
       field: 'name',
-      title: 'Имя'
+      title: 'Имя',
+      sort: null
    },
    {
       field: 'lastComment',
-      title: 'Важно знать'
+      title: 'Важно знать',
+      sort: null
    },
    {
       field: 'plus',
-      title: 'плюсики'
+      title: 'плюсики',
+      sort: null
    },
    {
       field: 'minus',
-      title: 'минусики'
+      title: 'минусики',
+      sort: null
    }
 ];
 
