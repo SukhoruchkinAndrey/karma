@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../../logo.jpg';
 import './MainInfo.css';
 import ListContainer from '../ListContainer/ListContainer';
 
@@ -56,14 +55,10 @@ const columns = [
    }
 ];
 
-class Application extends Component {
+class MainInfo extends Component {
    render() {
       return (
-         <div className="App">
-            <header className="App-header">
-               <img src={logo} className="App-logo" alt="logo" />
-               <h1 className="App-title">Bibosik</h1>
-            </header>
+         <div className="MainInfo">
             <div className="App-intro">
                <ListContainer items={data} columns={columns} />
             </div>
@@ -72,4 +67,4 @@ class Application extends Component {
    }
 }
 
-export default Application;
+export default MainInfo;
