@@ -1,0 +1,6 @@
+.listHeader__column_asc:after {
+    content: '↑';
+}
+.listHeader__column_desc:after {
+    content: '↓';
+}
