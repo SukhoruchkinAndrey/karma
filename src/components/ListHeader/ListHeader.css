@@ -1,6 +1,6 @@
 .listHeader__column_asc:after {
-    content: '↑';
+   content: '↑';
 }
 .listHeader__column_desc:after {
-    content: '↓';
+   content: '↓';
 }

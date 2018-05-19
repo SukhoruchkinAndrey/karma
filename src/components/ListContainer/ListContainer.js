@@ -29,7 +29,7 @@ class ListContainer extends Component {
    handleColumnClick = columnName => {
       const { items, currentSort, currentSortedColumn } = this.state;
       const newSort = currentSortedColumn === columnName ? !currentSort : true;
-      this.setState({     isLoading: true      });
+      this.setState({ isLoading: true });
       sortItems(items, newSort, columnName).then(newItems => {
          this.setState(prevState => ({
             items: newItems,
@@ -46,7 +46,7 @@ class ListContainer extends Component {
 
       return (
          <div className="ListContainer">
-            {isLoading && <div className="ListContainer__loadingIndicator"></div>}
+            {isLoading && <div className="ListContainer__loadingIndicator" />}
             <List
                items={items}
                columns={columns}
