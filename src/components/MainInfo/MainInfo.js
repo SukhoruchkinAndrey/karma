@@ -59,17 +59,15 @@ const columns = [
 class Application extends Component {
    render() {
       return (
-         <BrowserRouter>
-            <div className="App">
-               <header className="App-header">
-                  <img src={logo} className="App-logo" alt="logo" />
-                  <h1 className="App-title">Bibosik</h1>
-               </header>
-               <div className="App-intro">
-                  <ListContainer items={data} columns={columns} />
-               </div>
+         <div className="App">
+            <header className="App-header">
+               <img src={logo} className="App-logo" alt="logo" />
+               <h1 className="App-title">Bibosik</h1>
+            </header>
+            <div className="App-intro">
+               <ListContainer items={data} columns={columns} />
             </div>
-         </BrowserRouter>
+         </div>
       );
    }
 }
