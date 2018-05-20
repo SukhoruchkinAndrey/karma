@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './MainInfo.css';
 import ListContainer from '../ListContainer/ListContainer';
+import { Link } from 'react-router-dom';
 import type { BasicItem } from '../ListItem/ListItem';
 
 const data = [
@@ -76,6 +77,7 @@ class MainInfo extends Component<MainInfoProps> {
       return (
          <div className="MainInfo">
             <div className="App-intro">
+               <Link to="/addComment">Добавить отзыв</Link>
                <ListContainer
                   items={data}
                   columns={columns}

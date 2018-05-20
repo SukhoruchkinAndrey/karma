@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: Node }) => (
          <h1 className="App-title">Bibosik</h1>
       </header>
       {children}
-      <footer>Доволен?</footer>
+      <footer />
    </Fragment>
 );
 
