@@ -1,7 +1,9 @@
+//@flow
 import React, { Fragment } from 'react';
+import type { Node } from 'react';
 import logo from '../../logo.jpg';
 
-const Layout = ({ children }) => (
+const Layout = ({ children }: { children: Node }) => (
    <Fragment>
       <header className="App-header">
          <img src={logo} className="App-logo" alt="logo" />

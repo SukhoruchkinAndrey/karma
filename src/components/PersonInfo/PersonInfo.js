@@ -1,5 +1,14 @@
+//@flow
 import React from 'react';
 
-const PersonInfo = ({ match }) => <div>{match.params.userId}</div>;
+const PersonInfo = ({
+   match
+}: {
+   match: {
+      params: {
+         userId: number
+      }
+   }
+}) => <div>{match.params.userId}</div>;
 
 export default PersonInfo;

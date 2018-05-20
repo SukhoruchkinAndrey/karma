@@ -1,7 +1,14 @@
+//@flow
 import React, { Component } from 'react';
 import List from '../List/List';
 import './ListContainer.css';
-const sortItems = (items, sorting, columnName) => {
+import type { BasicItem, Column } from '../ListItem/ListItem';
+
+const sortItems = (
+   items: Array<BasicItem>,
+   sorting: boolean,
+   columnName: string
+) => {
    const newItems = items.sort(
       (firstItem, secondItem) =>
          sorting
@@ -15,8 +22,21 @@ const sortItems = (items, sorting, columnName) => {
    });
 };
 
-class ListContainer extends Component {
-   constructor(props) {
+type ListContainerState = {
+   currentSortedColumn: string,
+   currentSort: boolean,
+   items: Array<BasicItem>,
+   isLoading?: boolean
+};
+
+type ListContainerProps = {
+   items: Array<BasicItem>,
+   columns: Array<Column>,
+   handleRowClick: (item: BasicItem) => void
+};
+
+class ListContainer extends Component<ListContainerProps, ListContainerState> {
+   constructor(props: ListContainerProps) {
       super(props);
 
       this.state = {
@@ -26,17 +46,17 @@ class ListContainer extends Component {
       };
    }
 
-   handleColumnClick = columnName => {
+   handleColumnClick = (columnName: string) => {
       const { items, currentSort, currentSortedColumn } = this.state;
       const newSort = currentSortedColumn === columnName ? !currentSort : true;
       this.setState({ isLoading: true });
       sortItems(items, newSort, columnName).then(newItems => {
-         this.setState(prevState => ({
+         this.setState({
             items: newItems,
             currentSort: newSort,
             currentSortedColumn: columnName,
             isLoading: false
-         }));
+         });
       });
    };
 

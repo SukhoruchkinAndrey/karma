@@ -1,28 +1,29 @@
 {
-   "name": "karma",
-   "version": "0.1.0",
-   "private": true,
-   "dependencies": {
-      "husky": "^0.14.3",
-      "lint-staged": "^7.1.1",
-      "prettier": "^1.12.1",
-      "prop-types": "^15.6.1",
-      "react": "^16.3.2",
-      "react-dom": "^16.3.2",
-      "react-router-dom": "^4.2.2",
-      "react-scripts": "1.1.4"
-   },
-   "scripts": {
-      "precommit": "lint-staged",
-      "start": "react-scripts start",
-      "build": "react-scripts build",
-      "test": "react-scripts test --env=jsdom",
-      "eject": "react-scripts eject"
-   },
-   "lint-staged": {
-      "src/**/*.{js,json,css}": [
-         "prettier --single-quote --tab-width 3 --write",
-         "git add"
-      ]
-   }
+  "name": "karma",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "flow-bin": "^0.72.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.1.1",
+    "prettier": "^1.12.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "flow": "flow",
+    "precommit": "lint-staged",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "lint-staged": {
+    "src/**/*.{js,json,css}": [
+      "prettier --single-quote --tab-width 3 --write",
+      "git add"
+    ]
+  }
 }

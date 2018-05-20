@@ -1,6 +1,8 @@
+//@flow
 import React, { Component } from 'react';
 import './MainInfo.css';
 import ListContainer from '../ListContainer/ListContainer';
+import type { BasicItem } from '../ListItem/ListItem';
 
 const data = [
    {
@@ -55,8 +57,18 @@ const columns = [
    }
 ];
 
-class MainInfo extends Component {
-   handleRowClick = item => {
+type MainInfoProps = {
+   history: Array<string>
+};
+
+export type MainInfoItem = BasicItem & {
+   lastComment: string,
+   plus: ?number,
+   minus: ?number
+};
+
+class MainInfo extends Component<MainInfoProps> {
+   handleRowClick = (item: MainInfoItem) => {
       this.props.history.push(`/person/${item.id}`);
    };
 

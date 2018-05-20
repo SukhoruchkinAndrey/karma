@@ -1,11 +1,18 @@
+//@flow
 import React from 'react';
 import './ListHeader.css';
+import type { Column } from '../ListItem/ListItem';
 
 const ListHeader = ({
    columns,
    handleColumnClick,
    currentSortedColumn,
    currentSort
+}: {
+   columns: Array<Column>,
+   handleColumnClick: (columnField: string) => void,
+   currentSortedColumn: string,
+   currentSort: boolean
 }) => (
    <thead className="listHead">
       <tr>
