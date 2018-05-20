@@ -2,7 +2,7 @@
 import React from 'react';
 import ListItem from '../ListItem/ListItem';
 import ListHeader from '../ListHeader/ListHeader';
-import type { MainInfoItem, Column } from '../ListItem/ListItem';
+import type { BasicItem, Column } from '../ListItem/ListItem';
 
 const List = ({
    items,
@@ -12,12 +12,12 @@ const List = ({
    currentSort,
    handleRowClick
 }: {
-   items: Array<MainInfoItem>,
+   items: Array<BasicItem>,
    columns: Array<Column>,
    handleColumnClick: (columnName: string) => void,
    currentSortedColumn: string,
    currentSort: boolean,
-   handleRowClick: (item: MainInfoItem) => void
+   handleRowClick: (item: BasicItem) => void
 }) => (
    <table>
       <ListHeader
