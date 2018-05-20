@@ -15,11 +15,7 @@ const sortItems = (
             ? firstItem[columnName] - secondItem[columnName]
             : secondItem[columnName] - firstItem[columnName]
    );
-   return new Promise(resolve => {
-      setTimeout(() => {
-         resolve(newItems);
-      }, 1000);
-   });
+   return Promise.resolve(newItems);
 };
 
 type ListContainerState = {

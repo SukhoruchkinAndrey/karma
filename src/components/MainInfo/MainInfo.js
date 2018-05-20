@@ -4,38 +4,21 @@ import './MainInfo.css';
 import ListContainer from '../ListContainer/ListContainer';
 import { Link } from 'react-router-dom';
 import type { BasicItem } from '../ListItem/ListItem';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
 
-const data = [
-   {
-      id: 0,
-      name: 'Иванов Иван',
-      lastComment: 'Пиздец конечно, ща бы в 2018 не уметь в es6',
-      plus: 0,
-      minus: 4
-   },
-   {
-      id: 1,
-      name: 'Андреев Андрей',
-      lastComment: 'Пиздец конечно саня может в es6',
-      plus: 3,
-      minus: 2
-   },
-   {
-      id: 2,
-      name: 'Петров Петр',
-      lastComment: 'Пиздец конечно, петя не умеет в es6',
-      plus: 2,
-      minus: 3
-   },
-   {
-      id: 3,
-      name: 'Александров Александр',
-      lastComment:
-         'Пиздец конечно, андрюша наполовину что тут даже хз может он или нет',
-      plus: 1,
-      minus: 1
+const READ_PERSONS = gql`
+   query {
+      allPersons {
+         id
+         name
+         comments {
+            isPositive
+            text
+         }
+      }
    }
-];
+`;
 
 const columns = [
    {
@@ -58,33 +41,56 @@ const columns = [
    }
 ];
 
-type MainInfoProps = {
-   history: Array<string>
-};
-
 export type MainInfoItem = BasicItem & {
    lastComment: string,
    plus: ?number,
    minus: ?number
 };
 
+type MainInfoProps = {
+   items: Array<MainInfoItem>,
+   history: Array<string>
+};
+
 class MainInfo extends Component<MainInfoProps> {
    handleRowClick = (item: MainInfoItem) => {
-      this.props.history.push(`/person/${item.id}`);
+      this.props.history.push('/person/' + item.id);
+   };
+
+   prepareItems = persons => {
+      return persons.map(({ id, name, comments }) => {
+         const newItem = {
+            id,
+            name,
+            lastComment: comments[comments.length - 1].text,
+            isPositive: comments[comments.length - 1].isPositive,
+            plus: 0,
+            minus: 0
+         };
+         comments.forEach(item => {
+            item.isPositive ? newItem.plus++ : newItem.minus++;
+         });
+         return newItem;
+      });
    };
 
    render() {
       return (
-         <div className="MainInfo">
-            <div className="App-intro">
-               <Link to="/addComment">Добавить отзыв</Link>
-               <ListContainer
-                  items={data}
-                  columns={columns}
-                  handleRowClick={this.handleRowClick}
-               />
-            </div>
-         </div>
+         <Query query={READ_PERSONS}>
+            {({ data, loading }) => {
+               if (loading) return 'Loading...';
+               return (
+                  <div className="MainInfo">
+                     <Link to="/addComment">Добавить отзыв</Link>
+                     <ListContainer
+                        items={this.prepareItems(data.allPersons)}
+                        columns={columns}
+                        handleRowClick={this.handleRowClick}
+                     />
+                  </div>
+               );
+            }}
+         </Query>
       );
    }
 }

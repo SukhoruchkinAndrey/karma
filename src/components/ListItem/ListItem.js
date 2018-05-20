@@ -19,12 +19,17 @@ const ListItem = ({
    columns,
    handleClick
 }: {
-   item: ListItem,
+   item: BasicItem,
    columns: Array<Column>,
-   handleClick: (item: ListItem) => void
+   handleClick: (item: BasicItem) => void
 }) => (
-   <tr className="listItem" onClick={() => handleClick(item)}>
-      {columns.map(column => <td key={column.field}>{item[column.field]}</td>)}
+   <tr
+      className="listItem"
+      onClick={handleClick ? () => handleClick(item) : null}
+   >
+      {columns.map(column => (
+         <td key={column.field}>{item[column.field].toString()}</td>
+      ))}
    </tr>
 );
 

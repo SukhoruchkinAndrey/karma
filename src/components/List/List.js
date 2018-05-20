@@ -14,10 +14,10 @@ const List = ({
 }: {
    items: Array<BasicItem>,
    columns: Array<Column>,
-   handleColumnClick: (columnName: string) => void,
+   handleColumnClick?: (columnName: string) => void,
    currentSortedColumn: string,
    currentSort: boolean,
-   handleRowClick: (item: BasicItem) => void
+   handleRowClick?: (item: BasicItem) => void
 }) => (
    <table>
       <ListHeader

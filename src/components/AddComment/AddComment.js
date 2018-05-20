@@ -21,41 +21,66 @@ const CREATE_COMMENT = gql`
    }
 `;
 
+const CREATE_PERSON = gql`
+   mutation createPerson($name: String!) {
+      createPerson(name: $name) {
+         id
+      }
+   }
+`;
+
 class AddComment extends Component<any, any> {
    constructor(props) {
       super(props);
 
-      this.textArea = React.createRef();
+      this.commentField = React.createRef();
+      this.personField = React.createRef();
    }
 
-   handleSubmit = addComment => {
-      addComment({
+   handleSubmit = (addComment, createPerson) => {
+      createPerson({
          variables: {
-            text: this.textArea.current.value,
-            isPositive: true,
-            authorId: 'cjhesfeuuilt20177b2wn1up6',
-            personId: 'cjhetndz46ovs0197rv58ed16'
+            name: this.personField.current.value
          }
-      }).then(result => {
-         console.log(result);
+      }).then(({ data }) => {
+         addComment({
+            variables: {
+               text: this.commentField.current.value,
+               isPositive: true,
+               authorId: 'cjhezauylk3kl0177c6cnq0um',
+               personId: data.createPerson.id
+            }
+         });
       });
    };
 
    render() {
       return (
-         <Mutation mutation={CREATE_COMMENT}>
-            {(addComment, { error }) => {
-               if (error) return <div>Ошибка</div>;
+         <Mutation mutation={CREATE_PERSON}>
+            {(createPerson, { error }) => {
+               if (error) return 'Ошибка при создании person';
                return (
-                  <form
-                     onSubmit={event => {
-                        event.preventDefault();
-                        this.handleSubmit(addComment);
+                  <Mutation mutation={CREATE_COMMENT}>
+                     {(addComment, { error }) => {
+                        if (error) return <div>Ошибка</div>;
+                        return (
+                           <form
+                              onSubmit={event => {
+                                 event.preventDefault();
+                                 this.handleSubmit(addComment, createPerson);
+                              }}
+                           >
+                              <input
+                                 ref={this.personField}
+                                 type="text"
+                                 required
+                              />
+                              <textarea ref={this.commentField} required />
+                              <button type="submit">Отправить отзыв</button>
+                           </form>
+                        );
                      }}
-                  >
-                     <textarea ref={this.textArea} />
-                     <button type="submit">Отправить отзыв</button>
-                  </form>
+                  </Mutation>
                );
             }}
          </Mutation>
@@ -63,11 +88,11 @@ class AddComment extends Component<any, any> {
    }
 
    componentDidMount() {
-      this.textArea.current.focus();
+      this.commentField.current.focus();
    }
 
    componentWillUnmount() {
-      this.textArea = null;
+      this.commentField = null;
    }
 }
 
