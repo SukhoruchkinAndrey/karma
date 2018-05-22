@@ -27,7 +27,6 @@
 .Layout__header__logo {
    animation: header-logo-spin infinite 20s linear;
    height: 80px;
-   filter: drop-shadow(0px 0px 40px white);
 }
 
 .Layout__header__title {
