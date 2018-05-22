@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "apollo-boost": "^0.1.6",
+    "apollo-link-context": "latest",
+    "apollo-link-http": "latest",
     "flow-bin": "^0.72.0",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
@@ -13,10 +15,9 @@
     "react": "^16.3.2",
     "react-apollo": "^2.1.4",
     "react-dom": "^16.3.2",
+    "react-loadable": "^5.4.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.4",
-    "apollo-link-http": "latest",
-    "apollo-link-context": "latest"
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "flow": "flow",
