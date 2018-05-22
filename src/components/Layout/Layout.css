@@ -1,0 +1,62 @@
+.Layout__header {
+   text-align: center;
+   padding: 10px;
+   /*bg*/
+   background: linear-gradient(40deg, #32cca4, #34816d, #b3ddd2) 0 0 / 300% 300%;
+   animation: background-gradient 15s ease infinite;
+   box-shadow: rgba(52, 129, 109, 0.8) 0 0 20px;
+}
+
+.Layout__footer {
+   width: 100%;
+   box-sizing: border-box;
+   padding: 10px;
+   position: fixed;
+   bottom: 0;
+   color: white;
+   font-size: 1.5em;
+   display: inline-flex;
+   align-items: center;
+   justify-content: flex-end;
+   /*bg*/
+   background: linear-gradient(40deg, #32cca4, #34816d, #b3ddd2) 0 0 / 300% 300%;
+   animation: background-gradient 15s ease infinite;
+   box-shadow: rgba(52, 129, 109, 0.8) 0 0 20px;
+}
+
+.Layout__header__logo {
+   animation: header-logo-spin infinite 20s linear;
+   height: 80px;
+}
+
+.Layout__header__title {
+   color: white;
+   font-size: 1.5em;
+   margin: 2px 0;
+}
+
+a {
+   text-decoration: none;
+   color: unset;
+}
+
+@keyframes header-logo-spin {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(360deg);
+   }
+}
+
+@keyframes background-gradient {
+   0% {
+      background-position: 0% 50%;
+   }
+   50% {
+      background-position: 100% 51%;
+   }
+   100% {
+      background-position: 0% 50%;
+   }
+}
