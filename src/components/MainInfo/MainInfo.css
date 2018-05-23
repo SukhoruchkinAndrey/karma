@@ -1,3 +1,6 @@
 .MainInfo {
    font-size: large;
 }
+.mainInfo__addComment {
+   color: #34816d;
+}

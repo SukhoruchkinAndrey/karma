@@ -7,6 +7,13 @@
    box-shadow: rgba(52, 129, 109, 0.8) 0 0 20px;
 }
 
+.Layout__main {
+   width: 60%;
+   margin: 0 20%;
+   display: flex;
+   justify-content: center;
+}
+
 .Layout__footer {
    width: 100%;
    box-sizing: border-box;

@@ -81,7 +81,9 @@ class MainInfo extends Component<MainInfoProps> {
                if (loading) return 'Loading...';
                return (
                   <div className="MainInfo">
-                     <Link to="/addComment">Добавить отзыв</Link>
+                     <Link className="mainInfo__addComment" to="/addComment">
+                        Добавить отзыв
+                     </Link>
                      <ListContainer
                         items={this.prepareItems(data.allPersons)}
                         columns={columns}

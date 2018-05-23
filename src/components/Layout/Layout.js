@@ -13,7 +13,7 @@ const Layout = ({ children }: { children: Node }) => (
             <h1 className="Layout__header__title">Karma</h1>
          </Link>
       </header>
-      {children}
+      <main className="Layout__main">{children}</main>
       <footer className="Layout__footer">az as ps</footer>
    </Fragment>
 );
