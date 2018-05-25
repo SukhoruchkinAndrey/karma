@@ -13,7 +13,7 @@ const READ_PERSONS = gql`
          id
          name
          comments {
-            isPositive
+            commentType
             text
          }
       }
@@ -63,12 +63,13 @@ class MainInfo extends Component<MainInfoProps> {
             id,
             name,
             lastComment: comments[comments.length - 1].text,
-            isPositive: comments[comments.length - 1].isPositive,
+            commentType: comments[comments.length - 1].commentType,
             plus: 0,
             minus: 0
          };
          comments.forEach(item => {
-            item.isPositive ? newItem.plus++ : newItem.minus++;
+            if (item.commentType === 'POSITIVE') item.plus++;
+            if (item.commentType === 'NEGATIVE') item.minus++;
          });
          return newItem;
       });

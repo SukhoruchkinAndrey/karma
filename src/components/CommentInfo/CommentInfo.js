@@ -7,7 +7,7 @@ const READ_COMMENT = gql`
       Comment(id: $id) {
          id
          text
-         isPositive
+         commentType
          author {
             name
          }

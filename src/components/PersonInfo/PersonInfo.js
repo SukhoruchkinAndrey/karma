@@ -10,7 +10,7 @@ const READ_PERSON = gql`
          id
          name
          comments {
-            isPositive
+            commentType
             text
             author {
                name

@@ -5,18 +5,21 @@ import { Mutation } from 'react-apollo';
 const CREATE_COMMENT = gql`
    mutation createComment(
       $text: String!
-      $isPositive: Boolean!
+      $commentType: Boolean!
       $authorId: ID!
       $personId: ID!
    ) {
       createComment(
          text: $text
-         isPositive: $isPositive
+         commentType: $commentType
          authorId: $authorId
          personId: $personId
       ) {
          id
          text
+         commentType
+         authorId
+         personId
       }
    }
 `;
@@ -25,6 +28,7 @@ const CREATE_PERSON = gql`
    mutation createPerson($name: String!) {
       createPerson(name: $name) {
          id
+         name
       }
    }
 `;
@@ -46,7 +50,7 @@ class AddComment extends Component<any, any> {
          addComment({
             variables: {
                text: this.commentField.current.value,
-               isPositive: true,
+               commentType: true,
                authorId: 'cjhezauylk3kl0177c6cnq0um',
                personId: data.createPerson.id
             }
