@@ -37,8 +37,8 @@ const columns = [
       title: 'Комментарий'
    },
    {
-      field: 'isPositive',
-      title: 'минусики'
+      field: 'commentType',
+      title: 'Типыч комментыча'
    }
 ];
 

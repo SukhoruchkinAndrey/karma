@@ -58,21 +58,25 @@ class MainInfo extends Component<MainInfoProps> {
    };
 
    prepareItems = persons => {
-      return persons.map(({ id, name, comments }) => {
-         const newItem = {
-            id,
-            name,
-            lastComment: comments[comments.length - 1].text,
-            commentType: comments[comments.length - 1].commentType,
-            plus: 0,
-            minus: 0
-         };
-         comments.forEach(item => {
-            if (item.commentType === 'POSITIVE') item.plus++;
-            if (item.commentType === 'NEGATIVE') item.minus++;
-         });
-         return newItem;
+      const preparedItems = [];
+      persons.forEach(({ id, name, comments }) => {
+         if (comments.length) {
+            const newItem = {
+               id,
+               name,
+               lastComment: comments[comments.length - 1].text,
+               commentType: comments[comments.length - 1].commentType,
+               plus: 0,
+               minus: 0
+            };
+            comments.forEach(item => {
+               if (item.commentType === 'POSITIVE') newItem.plus++;
+               if (item.commentType === 'NEGATIVE') newItem.minus++;
+            });
+            preparedItems.push(newItem);
+         }
       });
+      return preparedItems;
    };
 
    render() {

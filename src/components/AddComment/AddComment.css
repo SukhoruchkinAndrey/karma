@@ -1,0 +1,14 @@
+.AddComment__commentField {
+   height: 200px;
+}
+input.AddComment__nameField {
+   font-size: 25px;
+   display: inline-block;
+   margin-left: 10px;
+}
+.addComment__form {
+   width: 50%;
+}
+.addComment__nameBlock {
+   display: flex;
+}
