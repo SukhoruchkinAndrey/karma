@@ -10,22 +10,28 @@ const List = ({
    handleColumnClick,
    currentSortedColumn,
    currentSort,
-   handleRowClick
+   handleRowClick,
+   className = '',
+   showHeader = true
 }: {
    items: Array<BasicItem>,
    columns: Array<Column>,
    handleColumnClick?: (columnName: string) => void,
    currentSortedColumn: string,
    currentSort: boolean,
-   handleRowClick?: (item: BasicItem) => void
+   handleRowClick?: (item: BasicItem) => void,
+   className?: string,
+   showHeader?: boolean
 }) => (
-   <table>
-      <ListHeader
-         columns={columns}
-         handleColumnClick={handleColumnClick}
-         currentSortedColumn={currentSortedColumn}
-         currentSort={currentSort}
-      />
+   <table className={className}>
+      {showHeader && (
+         <ListHeader
+            columns={columns}
+            handleColumnClick={handleColumnClick}
+            currentSortedColumn={currentSortedColumn}
+            currentSort={currentSort}
+         />
+      )}
       <tbody>
          {items.map(item => (
             <ListItem

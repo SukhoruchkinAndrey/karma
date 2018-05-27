@@ -28,6 +28,7 @@ type ListContainerState = {
 type ListContainerProps = {
    items: Array<BasicItem>,
    columns: Array<Column>,
+   showHeader: boolean,
    handleRowClick: (item: BasicItem) => void
 };
 
@@ -58,7 +59,7 @@ class ListContainer extends Component<ListContainerProps, ListContainerState> {
 
    render() {
       const { items, currentSort, currentSortedColumn, isLoading } = this.state;
-      const { columns, handleRowClick } = this.props;
+      const { columns, handleRowClick, showHeader } = this.props;
 
       return (
          <div className="ListContainer">
@@ -66,6 +67,7 @@ class ListContainer extends Component<ListContainerProps, ListContainerState> {
             <List
                items={items}
                columns={columns}
+               showHeader={showHeader}
                currentSort={currentSort}
                currentSortedColumn={currentSortedColumn}
                handleColumnClick={this.handleColumnClick}
@@ -75,5 +77,9 @@ class ListContainer extends Component<ListContainerProps, ListContainerState> {
       );
    }
 }
+
+ListContainer.defaultProps = {
+   showHeader: true
+};
 
 export default ListContainer;

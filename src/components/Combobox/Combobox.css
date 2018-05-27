@@ -1,0 +1,18 @@
+.Combobox {
+   position: relative;
+}
+
+.Combobox__popup {
+   position: absolute;
+   border: 1px solid;
+}
+
+.Combobox__success {
+   box-shadow: 0 0 2px green;
+}
+
+.Combobox__input,
+.Combobox__list,
+.Combobox__popup {
+   width: 100%;
+}
