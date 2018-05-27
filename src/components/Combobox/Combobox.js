@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Combobox.css';
 import List from '../List/List';
+import classNames from 'classnames';
 
 class Combobox extends Component {
    constructor(props) {
@@ -14,14 +15,14 @@ class Combobox extends Component {
 
    onInputValueChange = event => {
       let items = [];
-      const value = event.target.value;
+      const inputText = event.target.value;
 
-      if (value.length >= 3) {
-         items = this.searchItems(value);
+      if (inputText.length >= 3) {
+         items = this.searchItems(inputText);
       }
       this.setState({
-         items: items,
-         inputText: value,
+         items,
+         inputText,
          selectedItem: null
       });
       this.selectedItemChangeHandler(null);
@@ -29,14 +30,14 @@ class Combobox extends Component {
 
    searchItems = text => {
       return this.props.items.filter(item => {
-         return item.title.indexOf(text) !== -1;
+         return item[this.props.searchProperty].indexOf(text) !== -1;
       });
    };
 
    onItemSelect = item => {
       this.setState({
          selectedItem: item,
-         inputText: item.title
+         inputText: item[this.props.searchProperty]
       });
       this.selectedItemChangeHandler(item);
    };
@@ -50,10 +51,12 @@ class Combobox extends Component {
    render() {
       const { searchProperty } = this.props;
       const { items, inputText, selectedItem } = this.state;
+      const comboboxClass = classNames({
+         Combobox: true,
+         Combobox__success: selectedItem
+      });
       return (
-         <div
-            className={'Combobox ' + (selectedItem ? 'Combobox__success' : '')}
-         >
+         <div className={comboboxClass}>
             <input
                className="Combobox__input"
                value={inputText}
