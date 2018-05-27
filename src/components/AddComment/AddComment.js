@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Query } from 'react-apollo';
 import './AddComment.css';
+import CommentForm from '../CommenForm/CommentForm';
 
 const CREATE_COMMENT = gql`
    mutation createComment(
@@ -52,28 +53,63 @@ class AddComment extends Component<any, any> {
    constructor(props) {
       super(props);
 
-      this.commentField = React.createRef();
-      this.personName = React.createRef();
-      this.personSecondName = React.createRef();
       this.state = {
          newPerson: false
       };
    }
 
    handleSubmit = (addComment, createPerson) => {
-      createPerson({
-         variables: {
-            name: this.personField.current.value
-         }
-      }).then(({ data }) => {
-         addComment({
+      if (this.state.newPerson) {
+         createPerson({
+            variables: {
+               name: this.state.personSecondName + ' ' + this.state.personName // todo
+            }
+         }).then(({ data }) => {
+            //todo: to function !!! WARNING DUPLICATE !!!
+            addComment({
+               variables: {
+                  text: this.state.comment,
+                  commentType: 'NEGATIVE',
+                  authorId: 'cjhezauylk3kl0177c6cnq0um',
+                  personId: data.createPerson.id
+               }
+            });
+         });
+      } else {
+         // data - id from combobox
+         //todo: to function // !!! WARNING DUPLICATE !!!
+         /*addComment({
             variables: {
                text: this.commentField.current.value,
                commentType: 'NEGATIVE',
                authorId: 'cjhezauylk3kl0177c6cnq0um',
                personId: data.createPerson.id
             }
-         });
+         });*/
+      }
+   };
+
+   handleAddPersonClick = () => {
+      this.setState({
+         newPerson: true
+      });
+   };
+
+   personNameChange = event => {
+      this.setState({
+         personName: event.target.value
+      });
+   };
+
+   personSecondNameChange = event => {
+      this.setState({
+         personSecondName: event.target.value
+      });
+   };
+
+   commentChange = event => {
+      this.setState({
+         comment: event.target.value
       });
    };
 
@@ -92,49 +128,23 @@ class AddComment extends Component<any, any> {
                               {(addComment, { error }) => {
                                  if (error) return <div>Ошибка</div>;
                                  return (
-                                    <form
-                                       className="addComment__form"
-                                       onSubmit={event => {
-                                          event.preventDefault();
+                                    <CommentForm
+                                       newPerson={newPerson}
+                                       handleAddPersonClick={
+                                          this.handleAddPersonClick
+                                       }
+                                       personNameChange={this.personNameChange}
+                                       personSecondNameChange={
+                                          this.personSecondNameChange
+                                       }
+                                       commentChange={this.commentChange}
+                                       handleSubmit={() =>
                                           this.handleSubmit(
                                              addComment,
                                              createPerson
-                                          );
-                                       }}
-                                    >
-                                       <div className="">
-                                          <h5>Выберите челобасика:</h5>
-
-                                          <button>Добавить челобасика</button>
-                                       </div>
-                                       <div className="addComment__nameBlock">
-                                          <h5>Имя:</h5>
-                                          <input
-                                             ref={this.personName}
-                                             type="text"
-                                             className="AddComment__nameField"
-                                             required
-                                          />
-                                       </div>
-                                       <div className="addComment__nameBlock">
-                                          <h5>Фамилия:</h5>
-                                          <input
-                                             ref={this.personSecondName}
-                                             type="text"
-                                             className="AddComment__nameField"
-                                             required
-                                          />
-                                       </div>
-                                       <h5>Отзыв</h5>
-                                       <textarea
-                                          className="AddComment__commentField"
-                                          ref={this.commentField}
-                                          required
-                                       />
-                                       <button type="submit">
-                                          Оставить отзыв
-                                       </button>
-                                    </form>
+                                          )
+                                       }
+                                    />
                                  );
                               }}
                            </Mutation>
@@ -149,10 +159,6 @@ class AddComment extends Component<any, any> {
 
    componentDidMount() {
       // this.commentField.current.focus();
-   }
-
-   componentWillUnmount() {
-      this.commentField = null;
    }
 }
 
