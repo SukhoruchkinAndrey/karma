@@ -55,6 +55,10 @@ class PersonInfo extends Component {
       }));
    };
 
+   componentDidMount() {
+      this.props.changeColor('NEGATIVE');
+   }
+
    render() {
       const { match } = this.props;
       return (

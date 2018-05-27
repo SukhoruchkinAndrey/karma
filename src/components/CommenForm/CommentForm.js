@@ -1,4 +1,23 @@
 import React, { Fragment } from 'react';
+import Combobox from '../Combobox/Combobox';
+import RadioGroup from '../RadioGroup/RadioGroup';
+
+const radioItems = [
+   {
+      id: 'POSITIVE',
+      title: '+карма'
+   },
+   {
+      id: 'NEGATIVE',
+      title: '-карма'
+   }
+   //todo: feature
+   /*,
+   {
+      id: 'ROFL',
+      title: 'рофляночка'
+   }*/
+];
 
 const CommentForm = ({
    newPerson,
@@ -6,13 +25,22 @@ const CommentForm = ({
    handleAddPersonClick,
    personNameChange,
    commentChange,
-   personSecondNameChange
+   personSecondNameChange,
+   comboboxData,
+   comboboxSearchProperty,
+   comboboxSelectHandler,
+   radioChangeHandler,
+   isValid
 }) => (
    <div className="addComment__form">
       {!newPerson && (
          <div className="">
             <h5>Выберите челобасика:</h5>
-
+            <Combobox
+               selectHandler={comboboxSelectHandler}
+               items={comboboxData}
+               searchProperty={comboboxSearchProperty}
+            />
             <button onClick={handleAddPersonClick}>Добавить челобасика</button>
          </div>
       )}
@@ -36,16 +64,13 @@ const CommentForm = ({
             </div>
          </Fragment>
       )}
-
+      <RadioGroup
+         items={radioItems}
+         changeHandler={radioChangeHandler}
+         defaultChecked="NEGATIVE"
+      />
       <textarea className="AddComment__commentField" onChange={commentChange} />
-      <button
-         onClick={event => {
-            event.preventDefault();
-            handleSubmit();
-         }}
-      >
-         Оставить отзыв
-      </button>
+      <button onClick={handleSubmit}>Оставить отзыв</button>
    </div>
 );
 
