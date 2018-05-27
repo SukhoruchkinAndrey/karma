@@ -10,15 +10,11 @@ const CommentForm = ({
 }) => (
    <div className="addComment__form">
       {!newPerson && (
-         <Fragment>
-            <div className="">
-               <h5>Выберите челобасика:</h5>
+         <div className="">
+            <h5>Выберите челобасика:</h5>
 
-               <button onClick={handleAddPersonClick}>
-                  Добавить челобасика
-               </button>
-            </div>
-         </Fragment>
+            <button onClick={handleAddPersonClick}>Добавить челобасика</button>
+         </div>
       )}
       {newPerson && (
          <Fragment>
