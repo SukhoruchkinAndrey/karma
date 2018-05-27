@@ -3,6 +3,10 @@ import './Combobox.css';
 import List from '../List/List';
 import classNames from 'classnames';
 
+const prepareToSearch = text => {
+   return text.toLowerCase().replace(/ё/g, 'е');
+};
+
 class Combobox extends Component {
    constructor(props) {
       super(props);
@@ -29,8 +33,11 @@ class Combobox extends Component {
    };
 
    searchItems = text => {
-      return this.props.items.filter(item => {
-         return item[this.props.searchProperty].indexOf(text) !== -1;
+      const { searchProperty, items } = this.props;
+      const preparedText = prepareToSearch(text);
+      return items.filter(item => {
+         const preparedItemText = prepareToSearch(item[searchProperty]);
+         return preparedItemText.indexOf(preparedText) !== -1;
       });
    };
 

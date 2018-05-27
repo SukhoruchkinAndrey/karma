@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Query } from 'react-apollo';
@@ -54,38 +54,54 @@ class AddComment extends Component<any, any> {
       super(props);
 
       this.state = {
-         newPerson: false
+         isValid: true,
+         newPerson: false,
+         comment: '',
+         personName: '',
+         personSecondName: '',
+         selectedPerson: null,
+         commentType: 'NEGATIVE'
       };
    }
 
    handleSubmit = (addComment, createPerson) => {
-      if (this.state.newPerson) {
+      const {
+         commentType,
+         comment,
+         personSecondName,
+         personName,
+         newPerson,
+         selectedPerson
+      } = this.state;
+
+      if (!this.validate()) {
+         this.setState({ isValid: false });
+         return;
+      }
+      if (newPerson) {
          createPerson({
             variables: {
-               name: this.state.personSecondName + ' ' + this.state.personName // todo
+               name: personSecondName + ' ' + personName
             }
          }).then(({ data }) => {
-            //todo: to function !!! WARNING DUPLICATE !!!
             addComment({
                variables: {
-                  text: this.state.comment,
-                  commentType: 'NEGATIVE',
+                  text: comment,
+                  commentType: commentType,
                   authorId: 'cjhezauylk3kl0177c6cnq0um',
                   personId: data.createPerson.id
                }
-            });
+            }).then(() => this.props.history.push('/'));
          });
       } else {
-         // data - id from combobox
-         //todo: to function // !!! WARNING DUPLICATE !!!
-         /*addComment({
+         addComment({
             variables: {
-               text: this.commentField.current.value,
-               commentType: 'NEGATIVE',
+               text: comment,
+               commentType: commentType,
                authorId: 'cjhezauylk3kl0177c6cnq0um',
-               personId: data.createPerson.id
+               personId: selectedPerson.id
             }
-         });*/
+         }).then(() => this.props.history.push('/'));
       }
    };
 
@@ -97,13 +113,13 @@ class AddComment extends Component<any, any> {
 
    personNameChange = event => {
       this.setState({
-         personName: event.target.value
+         personName: event.target.value.trim()
       });
    };
 
    personSecondNameChange = event => {
       this.setState({
-         personSecondName: event.target.value
+         personSecondName: event.target.value.trim()
       });
    };
 
@@ -113,8 +129,35 @@ class AddComment extends Component<any, any> {
       });
    };
 
+   comboboxSelectHandler = item => {
+      this.setState({
+         selectedPerson: item
+      });
+   };
+
+   radioChangeHandler = id => {
+      this.setState({
+         commentType: id
+      });
+   };
+
+   validate = () => {
+      const {
+         comment,
+         personSecondName,
+         personName,
+         newPerson,
+         selectedPerson
+      } = this.state;
+
+      return (
+         comment &&
+         (newPerson ? personSecondName && personName : selectedPerson)
+      );
+   };
+
    render() {
-      const { newPerson } = this.state;
+      const { newPerson, isValid } = this.state;
       return (
          <Query query={READ_PERSONS}>
             {({ data, loading }) => {
@@ -128,23 +171,37 @@ class AddComment extends Component<any, any> {
                               {(addComment, { error }) => {
                                  if (error) return <div>Ошибка</div>;
                                  return (
-                                    <CommentForm
-                                       newPerson={newPerson}
-                                       handleAddPersonClick={
-                                          this.handleAddPersonClick
-                                       }
-                                       personNameChange={this.personNameChange}
-                                       personSecondNameChange={
-                                          this.personSecondNameChange
-                                       }
-                                       commentChange={this.commentChange}
-                                       handleSubmit={() =>
-                                          this.handleSubmit(
-                                             addComment,
-                                             createPerson
-                                          )
-                                       }
-                                    />
+                                    <Fragment>
+                                       <CommentForm
+                                          newPerson={newPerson}
+                                          handleAddPersonClick={
+                                             this.handleAddPersonClick
+                                          }
+                                          personNameChange={
+                                             this.personNameChange
+                                          }
+                                          personSecondNameChange={
+                                             this.personSecondNameChange
+                                          }
+                                          commentChange={this.commentChange}
+                                          handleSubmit={() =>
+                                             this.handleSubmit(
+                                                addComment,
+                                                createPerson
+                                             )
+                                          }
+                                          comboboxData={data.allPersons}
+                                          comboboxSearchProperty="name"
+                                          comboboxSelectHandler={
+                                             this.comboboxSelectHandler
+                                          }
+                                          radioChangeHandler={
+                                             this.radioChangeHandler
+                                          }
+                                          defaultChecked=""
+                                       />
+                                       {!isValid && <div>Невалидная форма</div>}
+                                    </Fragment>
                                  );
                               }}
                            </Mutation>
@@ -155,10 +212,6 @@ class AddComment extends Component<any, any> {
             }}
          </Query>
       );
-   }
-
-   componentDidMount() {
-      // this.commentField.current.focus();
    }
 }
 

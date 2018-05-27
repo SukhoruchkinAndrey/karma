@@ -1,6 +1,5 @@
 //@flow
 import React from 'react';
-import './ListItem.css';
 
 export type BasicItem = {
    id: number,
