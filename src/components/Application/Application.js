@@ -1,5 +1,5 @@
 //@flow
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Layout from '../Layout/Layout';
 import { ApolloProvider } from 'react-apollo';
@@ -58,28 +58,67 @@ const LoadableFourZeroFour = Loadable({
    loading: Loading
 });
 
-const Application = () => (
-   <BrowserRouter>
-      <ApolloProvider client={client}>
-         <Layout>
-            <Switch>
-               <Route path="/" component={LoadableMainInfo} exact />
-               <Route path="/addComment" component={LoadableAddComment} exact />
-               <Route
-                  path="/person/:userId"
-                  component={LoadablePersonInfo}
-                  exact
-               />
-               <Route
-                  path="/comment/:commentId"
-                  component={LoadableCommentInfo}
-                  exact
-               />
-               <Route component={LoadableFourZeroFour} />
-            </Switch>
-         </Layout>
-      </ApolloProvider>
-   </BrowserRouter>
-);
+export const HeaderContext = React.createContext({
+   color: 'POSITIVE',
+   changeColor: () => {}
+});
+
+class Application extends Component {
+   constructor(props) {
+      super(props);
+
+      this.state = {
+         color: 'POSITIVE',
+         changeColor: this.changeColor
+      };
+   }
+
+   changeColor = color => {
+      this.setState({
+         color
+      });
+   };
+
+   render() {
+      return (
+         <BrowserRouter>
+            <ApolloProvider client={client}>
+               <HeaderContext.Provider value={this.state}>
+                  <Layout>
+                     <Switch>
+                        <Route path="/" component={LoadableMainInfo} exact />
+                        <Route
+                           path="/addComment"
+                           component={LoadableAddComment}
+                           exact
+                        />
+                        <Route
+                           path="/person/:userId"
+                           render={props => (
+                              <HeaderContext.Consumer>
+                                 {({ changeColor }) => (
+                                    <LoadablePersonInfo
+                                       {...props}
+                                       changeColor={changeColor}
+                                    />
+                                 )}
+                              </HeaderContext.Consumer>
+                           )}
+                           exact
+                        />
+                        <Route
+                           path="/comment/:commentId"
+                           component={LoadableCommentInfo}
+                           exact
+                        />
+                        <Route component={LoadableFourZeroFour} />
+                     </Switch>
+                  </Layout>
+               </HeaderContext.Provider>
+            </ApolloProvider>
+         </BrowserRouter>
+      );
+   }
+}
 
 export default Application;
